@@ -55,8 +55,7 @@ Analysing an image can demand a lot of processing power depending on the size an
 Image urls are automaticly preloaded. This only works asynchronous.
 
 ```html
-      ImageDownsampler.run('http://www.example.com/image.jpg', {}, myCallback);
-   };
+   ImageDownsampler.run('http://www.example.com/image.jpg', {}, myCallback);
 
    var myCallback = function (samples) {
       // do something with the samples
