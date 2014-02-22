@@ -1,6 +1,6 @@
 # Image Downsampler
 
-A lightweight Image Downsampler for browsers with canvas support. Works with source url (only async), images objects and raw canvas data. This function returns a two-dimensional array (samples[x][y]). Consider reducing the sample size or the accuracy to improve the performance.
+A lightweight Image Downsampler for browsers with canvas support. Works with image urls (only async), image objects and raw canvas data. This function returns a two-dimensional array (samples[x][y]). Consider reducing the sample size or the accuracy to improve the performance.
 
 ## Settings (defaults)
 
