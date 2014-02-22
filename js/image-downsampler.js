@@ -1,5 +1,6 @@
 /*!
- * Image Downsampler v1.0
+ * Image Downsampler v1.1
+ * <https://github.com/Zephalon/ImageDownsampler>
  *  
  * Copyright (c) 2014, Fabian Prinz-Arnold <mail@addictivity.com>
  * 
@@ -8,12 +9,12 @@
  */
 
 (function(root, factory) {
-   if (typeof exports === "object" && exports) {
+   if (typeof exports === 'object' && exports) {
       factory(exports); // CommonJS
    } else {
       var image_downsampler = {};
       factory(image_downsampler);
-      if (typeof define === "function" && define.amd) {
+      if (typeof define === 'function' && define.amd) {
          define(image_downsampler); // AMD
       } else {
          root.ImageDownsampler = image_downsampler; // <script>
@@ -25,8 +26,8 @@
       samples_x: 10, // the number of horizonal samples
       samples_y: 10, // the number of vertical samples
       accuracy: 5, // sample every * pixel for better performance
-      bleed: 10, // distance to image border to avoid faulty analysing
-      async: false // execute asynchronous to avoid blocking the script
+      bleed: 5, // distance to image border to avoid faulty analysing
+      async: true // execute asynchronous to avoid blocking the application
    };
    var debug = false; // debug mode
 
@@ -35,19 +36,23 @@
     * 
     * Validate parameters and fetch data sync/async
     * 
-    * @param {image} image | {object} imagedata
+    * @param {string} || {image} || {object} image
     * @param {object} settings
     * @param {function} callback
     */
    var executeDownsampling = function(image, settings, callback) {
-      if (image instanceof HTMLImageElement || typeof image === 'object') {
-         // setup
-         if (typeof settings !== 'object') {
-            settings = defaults;
-         } else {
-            settings = mergeOptions(defaults, settings);
-         }
+      // setup
+      if (typeof settings !== 'object') {
+         settings = defaults;
+      } else {
+         settings = mergeOptions(defaults, settings);
+      }
 
+      if (typeof image === 'string') {
+         // string provided, should be source url
+         settings.async = true; // always async because of preloading
+         preloadImage(image, settings, callback); // preload and call this function again
+      } else if (image instanceof HTMLImageElement || typeof image === 'object') {
          if (settings.async && typeof callback === 'function') {
             // execute asynchronous
             log('execute asynchronous', 'executeDownsampling');
@@ -69,6 +74,22 @@
    };
 
    /**
+    * Preload Image
+    * 
+    * @param {string} src
+    * @param {object} settings
+    * @param {function} callback
+    */
+   var preloadImage = function(src, settings, callback) {
+      log('preloading image: ' + src, 'preloadImage');
+      var image = new Image();
+      image.src = src;
+      image.onload = function() {
+         executeDownsampling(this, settings, callback);
+      };
+   };
+
+   /**
     * Fetch Data
     * 
     * This function is called asyncronous if option is set
@@ -80,7 +101,7 @@
     */
    var fetchData = function(image, settings, callback) {
       var imagedata, samples;
-      
+
       // get image data
       if (image instanceof HTMLImageElement) {
          imagedata = getImagedata(image); // image provided, get imagedata
@@ -104,7 +125,7 @@
     * @param {image} image
     */
    var getImagedata = function(image) {
-      if (image) {
+      if (image instanceof HTMLImageElement) {
          var canvas = document.createElement('canvas');
          var context = canvas.getContext && canvas.getContext('2d');
          var height = canvas.height = image.naturalHeight || image.offsetHeight || image.height;
@@ -113,7 +134,7 @@
          try {
             context.drawImage(image, 0, 0);
          } catch (e) {
-            log('no image found. loaded?', 'createCanvas');
+            log('no image found. loaded?', 'getImagedata');
             return false;
          }
 
@@ -121,13 +142,15 @@
          try {
             var data = context.getImageData(0, 0, width, height);
          } catch (e) {
-            log('security error: wrong domain', 'createCanvas');
+            log('security error: wrong domain', 'getImagedata');
             return false;
          }
-         log('imagedata loaded ' + data.width + 'x' + data.height, 'createCanvas');
+         log('imagedata loaded ' + data.width + 'x' + data.height, 'getImagedata');
+         return data;
+      } else {
+         log('no image found', 'getImagedata');
+         return false;
       }
-      return data;
-      //document.removeChild(canvas); // the moor has done his duty, the moor can go. 
    };
 
    /**
@@ -223,4 +246,5 @@
 
    // expose functions
    image_downsampler.run = executeDownsampling;
+   image_downsampler.get = getImagedata;
 }));
