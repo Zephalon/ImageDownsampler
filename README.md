@@ -64,7 +64,7 @@ Image urls are automaticly preloaded. This only works asynchronous.
 
 ### Advanced
 
-To analyse large images or only the nessesary parts you can retrieve the image data first and analyse portions of it seperatly. The function also accepts raw canvas data instead of an image element.
+ImageDownsampler accepts raw canvas data instead of an image element. To analyse large images or only the necessary parts you can retrieve the imagedata first and analyse portions of it seperatly.
 
 ```html
    var image = new Image();
