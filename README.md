@@ -71,11 +71,12 @@ ImageDownsampler also accepts raw canvas data. This can be used to downsample a 
    image.src = 'http://www.example.com/image.jpg';
 
    this.image.onload = function() {
-      ImageDownsampler.get(image, {}, myCallback);
+      var imagedata = ImageDownsampler.get(image);
+      // do something with the image data
+      var samples = ImageDownsampler.run(imagedata, {}, myCallback);
    };
 
    var myCallback = function (imagedata) {
-      // retrieve partial data here...
-      var samples = ImageDownsampler.run(partial);
+      // do something with the samples
    }
 ```
