@@ -35,7 +35,7 @@ This example calculates a 20x15 array and analyses every 10th pixel.
 
       // do something with the samples
       for (var x = 0; x < samples.length; x++) {
-         for (var y = 0; y < samples[y].length; y++) {
+         for (var y = 0; y < samples[x].length; y++) {
             console.log(samples[x][y]); // logs something like {r: 255, g:150, b: 50}
          }
       };
