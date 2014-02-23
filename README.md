@@ -64,14 +64,14 @@ Image urls are automaticly preloaded. This only works asynchronous.
 
 ### Advanced
 
-ImageDownsampler accepts raw canvas data instead of an image element. To analyse large images or only the necessary parts you can retrieve the imagedata first and analyse portions of it seperatly.
+ImageDownsampler also accepts raw canvas data. This can be used to downsample a canvas object, to analyse very large images line by line or to do a partial analysis. Use your own function to get the raw data or use ImageDownsample's 'get' function to retrieve it from a an preloaded image object.
 
 ```html
    var image = new Image();
    image.src = 'http://www.example.com/image.jpg';
 
    this.image.onload = function() {
-      ImageDownsampler.run(image, {}, myCallback);
+      ImageDownsampler.get(image, {}, myCallback);
    };
 
    var myCallback = function (imagedata) {
