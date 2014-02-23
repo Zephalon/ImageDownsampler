@@ -1,6 +1,10 @@
 # ImageDownsampler
 
-A lightweight JavaScript Image Downsampler for browsers with canvas support. Works with image urls, image objects (make sure they are preloaded) and raw canvas data. ImageDownsampler returns a two-dimensional array (samples[x][y]). Consider reducing the sample size or the accuracy to improve the performance.
+A lightweight JavaScript Image Downsampler for browsers with canvas support. Works with image urls, preloaded image objects and raw canvas data. Consider reducing the sample size or the accuracy to improve the performance.
+
+## Output
+
+ImageDownsampler returns a two-dimensional array ([x][y]). Each sample contains an object with the rgb data, like {r: 255, g:150, b: 50}.
 
 ## Settings (defaults)
 
@@ -18,10 +22,10 @@ This example calculates a 20x15 array and analyses every 10th pixel.
 
 ```html
    var image = new Image();
-   image.src = 'http://www.example.com/image.jpg';
+   image.src = 'image.jpg';
 
-   // run downsampler on image load
    this.image.onload = function() {
+      // run downsampler on image load
       var samples = ImageDownsampler.run(image, {
          samples_x: 20,
          samples_y: 15,
@@ -30,7 +34,11 @@ This example calculates a 20x15 array and analyses every 10th pixel.
       });
 
       // do something with the samples
-   };
+      for (var y = 0; y < samples.length; y++) {
+         for (var x = 0; x < samples[y].length; x++) {
+            console.log(sample[x][y]); // logs something like {r: 255, g:150, b: 50}
+         }
+      };
 ```
 
 ### Asynchronous
@@ -39,7 +47,7 @@ Analysing an image can demand a lot of processing power depending on the size an
 
 ```html
    var image = new Image();
-   image.src = 'http://www.example.com/image.jpg';
+   image.src = 'image.jpg';
 
    this.image.onload = function() {
       ImageDownsampler.run(image, {}, myCallback);
@@ -68,7 +76,7 @@ ImageDownsampler also accepts raw canvas data. This can be used to downsample a 
 
 ```html
    var image = new Image();
-   image.src = 'http://www.example.com/image.jpg';
+   image.src = 'image.jpg';
 
    this.image.onload = function() {
       var imagedata = ImageDownsampler.get(image);
