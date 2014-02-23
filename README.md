@@ -1,6 +1,6 @@
-# Image Downsampler
+# ImageDownsampler
 
-A lightweight Image Downsampler for browsers with canvas support. Works with image urls (only async), image objects and raw canvas data. This function returns a two-dimensional array (samples[x][y]). Consider reducing the sample size or the accuracy to improve the performance.
+A lightweight JavaScript Image Downsampler for browsers with canvas support. Works with image urls, image objects (make sure they are preloaded) and raw canvas data. ImageDownsampler returns a two-dimensional array (samples[x][y]). Consider reducing the sample size or the accuracy to improve the performance.
 
 ## Settings (defaults)
 
@@ -35,7 +35,7 @@ This example calculates a 20x15 array and analyses every 10th pixel.
 
 ### Asynchronous
 
-Analysing an image can demand a lot of processing power depending on the size and number of samples. To avoid that your application is blocked you can provide a callback.
+Analysing an image can demand a lot of processing power depending on the size and number of samples. To avoid that your whole application is blocked during analysis you can provide a callback.
 
 ```html
    var image = new Image();
