@@ -89,4 +89,4 @@ ImageDownsampler also accepts raw canvas data. This can be used to downsample a 
    }
 ```
 
-If you experience performance problems consider reducing the sample size or the accuracy since this greatly improves the processing time. It can also be a good idea to use a already downsampled copy of an image instead of the full sized one. Just keep in mind that the results can appear more edgy.
+If you experience performance problems consider reducing the sample size or the accuracy since this greatly improves the processing time. It can also be a good idea to use an already downsampled copy of an image instead of the full sized one. Just keep in mind that the results can appear more edgy.
