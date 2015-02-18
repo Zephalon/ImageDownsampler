@@ -1,6 +1,6 @@
 # ImageDownsampler
 
-A lightweight JavaScript Image Downsampler for browsers with canvas support. Works with image urls, preloaded image objects and raw canvas data. Consider reducing the sample size or the accuracy to improve the performance.
+A lightweight JavaScript Image Downsampler for browsers with canvas support. Works with image urls, preloaded image objects and raw canvas data.
 
 ## Output
 
@@ -60,7 +60,7 @@ Analysing an image can demand a lot of processing power depending on the size an
 
 ### Preloading
 
-Image urls are automaticly preloaded. This only works asynchronous.
+Image links are automatically preloaded, just make sure the passed string is a valid URL. Please note that this only works asynchronous.
 
 ```html
    ImageDownsampler.run('http://www.example.com/image.jpg', {}, myCallback);
@@ -72,7 +72,7 @@ Image urls are automaticly preloaded. This only works asynchronous.
 
 ### Advanced
 
-ImageDownsampler also accepts raw canvas data. This can be used to downsample a canvas object, to analyse very large images line by line or to do a partial analysis. Use your own function to get the raw data or use ImageDownsample's 'get' function to retrieve it from a an preloaded image object.
+ImageDownsampler also accepts raw canvas data. This can be used to downsample a canvas object, to analyse very large images line by line or to do a partial analysis. Use your own function to get the raw data or use ImageDownsample's 'get' function to retrieve it from a preloaded image object.
 
 ```html
    var image = new Image();
@@ -88,3 +88,5 @@ ImageDownsampler also accepts raw canvas data. This can be used to downsample a 
       // do something with the samples
    }
 ```
+
+One last tip: if you experience performance problems consider reducing the sample size or the accuracy. It can be a good idea to use a already downsampled copy of an image instead of the full sized one.
